@@ -1,0 +1,7 @@
+{
+  "port": "80",
+  "binanceBaseURL": "https://api.binance.com",
+  "kuCoinBaseURL": "https://api.kucoin.com",
+  "gateIOBaseURL": "https://api.gateio.ws",
+  "clientServer": "http://localhost:3000"
+}
