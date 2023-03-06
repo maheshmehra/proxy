@@ -2,15 +2,18 @@ package connections
 
 import (
 	"fmt"
+	"github.com/maheshmehra/proxy/lib"
 	"github.com/maheshmehra/proxy/objects"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 )
 
 // HandleConnections : function is used for handle requests
 func HandleConnections(writer http.ResponseWriter, req *http.Request) {
+	// handling exceptions
+	defer lib.HandlePanic()
+
 	// Base URL
 	baseURL := ""
 
@@ -30,17 +33,19 @@ func HandleConnections(writer http.ResponseWriter, req *http.Request) {
 	res, err := http.Get(baseURL + req.RequestURI)
 
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println(err)
 	}
 
-	// reading response
-	byteVal, _ := io.ReadAll(res.Body)
+	if err == nil {
+		// reading response
+		byteVal, _ := io.ReadAll(res.Body)
 
-	// writing response in writer object
-	_, err = fmt.Fprintf(writer, string(byteVal))
+		// writing response in writer object
+		_, err = fmt.Fprintf(writer, string(byteVal))
 
-	// checking if any error occurred
-	if err != nil {
-		log.Fatalln(err)
+		// checking if any error occurred
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
